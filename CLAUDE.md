@@ -24,4 +24,7 @@
 - `#today`, `#journal`, `#medi`, `#settings` 주소로 바로 그 탭이 열린다(알림에서 씀).
 
 ## 알림
-- claude-work의 `.github/workflows/todo-notify.yml` + `scripts/todo-notify.py`가 KST 9시·21시에 data.json을 읽고 ntfy.sh로 푸시. 주제 이름은 secret `NTFY_TOPIC`.
+- 앱이 직접 알림을 받는다(웹 푸시). `sw.js`는 알림 전용 서비스 워커이고, 화면 캐시는 하지 않는다(매일 고치는 앱이라).
+- '나' 탭 '알림 켜기' → 이 폰의 알림 주소를 `data.pushSubs`(`{id,endpoint,keys,device,createdAt,updatedAt}`)에 저장. 토큰이 있어야 저장된다. 아이폰은 홈 화면에 추가한 앱에서만 된다.
+- 보내는 쪽: claude-work `.github/workflows/todo-notify.yml` + `scripts/todo-notify.py`, KST 9시·21시. 비밀 키는 secret `VAPID_PRIVATE_KEY`, 공개 키는 index.html의 `VAPID_PUBLIC`(공개라 괜찮음). 둘은 한 쌍이라 따로 바꾸면 안 된다.
+- 워크플로 파일은 맥북 gh 로그인에 workflow 권한이 없어 푸시가 막힌다. 바꿀 땐 GitHub 웹 편집기로.
