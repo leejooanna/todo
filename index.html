@@ -260,7 +260,8 @@ ol{padding-left:20px}
   </div>
   <div class="card yellow">
     <p class="q">알림 받기</p>
-    <p class="sub" style="color:inherit">아침 9시에 오늘 할 일을, 밤 9시에 못 끝낸 일을 알려 줘요. 폰에 <b>ntfy</b> 앱을 깔고, Claude가 알려 준 주제 이름을 구독하면 돼요.</p>
+    <p class="sub" id="push-msg" style="color:inherit">아침 9시에 오늘 할 일을, 밤 9시에 못 끝낸 일을 이 앱이 알려 줘요.</p>
+    <button class="btn" type="button" id="push-btn" style="margin-top:6px">알림 켜기</button>
   </div>
   <div class="card">
     <label class="row" style="justify-content:space-between">
@@ -340,7 +341,7 @@ const $ = id => document.getElementById(id);
 // todos: [{id,text,tag,due,done,doneAt,createdAt,updatedAt,deleted}]
 // journal: {"YYYY-MM-DD": {mood,note,question,answer,updatedAt}}
 // meditations: [{id,date,minutes,at,updatedAt}]
-const blank = () => ({version:1, todos:[], journal:{}, meditations:[]});
+const blank = () => ({version:1, todos:[], journal:{}, meditations:[], pushSubs:[]});
 let data = (()=>{ try{ return Object.assign(blank(), JSON.parse(localStorage.getItem('data'))||{}); }catch(e){ return blank(); } })();
 const getPref = (k,d) => { try{ return localStorage.getItem(k) ?? d; }catch(e){ return d; } };
 const setPref = (k,v) => { try{ localStorage.setItem(k,v); }catch(e){} };
@@ -356,6 +357,7 @@ function merge(a,b){
   const out = blank();
   out.todos = mergeList(a.todos, b.todos);
   out.meditations = mergeList(a.meditations, b.meditations);
+  out.pushSubs = mergeList(a.pushSubs, b.pushSubs);
   const keys = new Set([...Object.keys(a.journal||{}), ...Object.keys(b.journal||{})]);
   for (const k of keys) { const x = (a.journal||{})[k], y = (b.journal||{})[k];
     out.journal[k] = !x ? y : !y ? x : ((x.updatedAt||'') >= (y.updatedAt||'') ? x : y); }
@@ -568,6 +570,42 @@ $('big').onchange = e=>{ setPref('big', e.target.checked?'1':'0'); document.body
 $('export').onclick = ()=>{ const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([JSON.stringify(data,null,1)],{type:'application/json'}));
   a.download = `todo-backup-${todayKey()}.json`; a.click(); };
+
+// ===== 알림 =====
+// 공개 키라서 공개 저장소에 있어도 된다. 비밀 키는 claude-work의 GitHub secret에만 있다.
+const VAPID_PUBLIC = 'BKtZVu45HsvbJe2Kr701PTHVEEJLbIh_2ygRa7lGZKVnH7ViyWgafHK5m19yAaZ9LjP6XknUinvN4UItTyqN43A';
+const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const pushMsg = t => $('push-msg').textContent = t;
+const b64url = s => Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/') + '='.repeat((4 - s.length % 4) % 4)), c=>c.charCodeAt(0));
+async function subId(endpoint){ const h = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(endpoint));
+  return 'p' + [...new Uint8Array(h)].slice(0,8).map(b=>b.toString(16).padStart(2,'0')).join(''); }
+async function pushState(){
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    pushMsg(isIOS && !standalone ? '아이폰은 Safari 아래 공유 버튼 → "홈 화면에 추가"를 한 뒤, 홈 화면의 아이콘으로 열면 알림을 켤 수 있어요.' : '이 브라우저에서는 알림을 받을 수 없어요.');
+    $('push-btn').classList.add('hidden'); return;
+  }
+  const reg = await navigator.serviceWorker.ready, sub = await reg.pushManager.getSubscription();
+  const on = sub && Notification.permission === 'granted';
+  $('push-btn').textContent = on ? '알림 켜짐 ✓' : '알림 켜기';
+  if (on) pushMsg('아침 9시, 밤 9시에 이 폰으로 알려 드려요.');
+}
+$('push-btn').onclick = async ()=>{
+  if (!VAPID_PUBLIC) { pushMsg('알림 준비 중이에요. 조금만 기다려 주세요.'); return; }
+  if (!getPref('token','')) { pushMsg('먼저 위 칸에 GitHub 토큰을 넣어 주세요. 그래야 알림 보낼 곳을 저장해요.'); return; }
+  try {
+    if (await Notification.requestPermission() !== 'granted') { pushMsg('알림이 꺼져 있어요. 폰 설정 → 주안의 하루 → 알림을 켜 주세요.'); return; }
+    const reg = await navigator.serviceWorker.ready;
+    const sub = (await reg.pushManager.getSubscription()) || await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey:b64url(VAPID_PUBLIC)});
+    const j = sub.toJSON(), id = await subId(j.endpoint), t = now();
+    const cur = data.pushSubs.find(x=>x.id===id);
+    if (cur) Object.assign(cur, {keys:j.keys, deleted:false, updatedAt:t});
+    else data.pushSubs.push({id, endpoint:j.endpoint, keys:j.keys, device:isIOS?'iPhone':'폰', createdAt:t, updatedAt:t});
+    persist(); pushState();
+  } catch(e) { pushMsg('알림을 켜지 못했어요: ' + e.message); }
+};
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').then(pushState).catch(()=>{});
+else pushState();
 
 // ===== 탭 =====
 function show(tab){
