@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>주안의 하루</title>
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#121214" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="주안의 하루">
 <link rel="manifest" href="manifest.json">
@@ -18,11 +18,7 @@
   --dot:#f48a8a; --ring:#ffffff; --arc:#3f9db0; --track:rgba(255,255,255,.7); --ok:#3d8b5a; --warn:#c8402f;
   --r-lg:24px; --r-md:16px; --tap:46px; --sat:#3d7fd6; --sun:#e0533d;
 }
-@media (prefers-color-scheme: dark){
-  :root{ --bg:#121214; --soft:#1f1f23; --ink:#f3f1ec; --sub:#a6a39d; --line:#2c2c31;
-    --blue:#24474f; --green:#2f4428; --yellow:#4a4320; --pink:#55302d; --purple:#3a3352; --peach:#553c27;
-    --ring:#d8ecf0; --sat:#7fb2f0; --sun:#ff8a7a; --arc:#8fd8e6; --track:rgba(255,255,255,.14); --ok:#7ccf98; --warn:#ff8a7a; }
-}
+
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);
@@ -303,7 +299,7 @@ ol{padding-left:20px}
 <script>
 // ===== 새 버전 확인 =====
 // 고칠 때마다 이 값을 바꾼다. 폰이 예전 화면을 들고 있으면 열 때 새 버전으로 바꿔 준다.
-const APP_VERSION = '2026-11-17b';
+const APP_VERSION = '2026-11-17c';
 async function checkUpdate(){
   try {
     const r = await fetch('./index.html?nocache=' + Date.now(), {cache:'no-store'});
