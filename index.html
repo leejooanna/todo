@@ -16,121 +16,128 @@
   --bg:#ffffff; --soft:#f3f3f1; --ink:#161616; --sub:#77746f; --line:#e9e8e4;
   --blue:#bfe6ee; --green:#d5edc6; --yellow:#fbf19e; --pink:#f7c5c0; --purple:#ddd3f5; --peach:#fbd7b8;
   --dot:#f48a8a; --ring:#ffffff; --arc:#3f9db0; --track:rgba(255,255,255,.7); --ok:#3d8b5a; --warn:#c8402f;
-  --r-lg:32px; --r-md:22px; --tap:52px;
+  --r-lg:24px; --r-md:16px; --tap:46px; --sat:#3d7fd6; --sun:#e0533d;
 }
 @media (prefers-color-scheme: dark){
   :root{ --bg:#121214; --soft:#1f1f23; --ink:#f3f1ec; --sub:#a6a39d; --line:#2c2c31;
     --blue:#24474f; --green:#2f4428; --yellow:#4a4320; --pink:#55302d; --purple:#3a3352; --peach:#553c27;
-    --ring:#d8ecf0; --arc:#8fd8e6; --track:rgba(255,255,255,.14); --ok:#7ccf98; --warn:#ff8a7a; }
+    --ring:#d8ecf0; --sat:#7fb2f0; --sun:#ff8a7a; --arc:#8fd8e6; --track:rgba(255,255,255,.14); --ok:#7ccf98; --warn:#ff8a7a; }
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);
-  font:17px/1.45 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;
-  padding:env(safe-area-inset-top) 0 calc(150px + env(safe-area-inset-bottom));}
-body.big{font-size:20px}
-main{max-width:520px;margin:0 auto;padding:12px 16px}
+  font:16px/1.45 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;
+  padding:env(safe-area-inset-top) 0 calc(132px + env(safe-area-inset-bottom));}
+body.big{font-size:19px}
+main{max-width:520px;margin:0 auto;padding:8px 14px}
 button,input,textarea{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none;padding:0}
 :focus-visible{outline:3px solid #4aa3b5;outline-offset:2px}
 .hidden{display:none!important}
-h1{font-size:1.6em;font-weight:600;letter-spacing:-.02em;margin:18px 0 10px}
-h2{font-size:1.05em;font-weight:600;margin:22px 4px 10px}
+h1{font-size:1.35em;font-weight:700;letter-spacing:-.02em;margin:14px 0 8px}
+h2{font-size:.98em;font-weight:600;margin:18px 2px 8px}
 .sub{color:var(--sub);font-size:.85em}
-.card{border-radius:var(--r-lg);padding:20px;background:var(--soft);margin-bottom:12px}
+.card{border-radius:var(--r-lg);padding:16px;background:var(--soft);margin-bottom:12px}
 .card.blue{background:var(--blue)} .card.green{background:var(--green)} .card.yellow{background:var(--yellow)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.grid2 .card{margin:0;padding:16px 18px}
-.big-num{font-size:2em;font-weight:500;letter-spacing:-.03em;line-height:1.1}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0 12px}
+.grid2 .card{margin:0;padding:12px 14px}
+.big-num{font-size:1.5em;font-weight:500;letter-spacing:-.03em;line-height:1.1}
 .big-num small{font-size:.45em;color:var(--sub);margin-left:4px}
 
 /* 상단 */
 .top{display:flex;align-items:center;gap:12px;padding-top:6px}
-.avatar{width:48px;height:48px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-size:1.5em}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-size:1.2em}
 .hello{flex:1;font-weight:600}
-.icon-btn{width:52px;height:52px;border-radius:50%;background:var(--soft);display:grid;place-items:center;position:relative}
-.icon-btn svg{width:22px;height:22px}
-.icon-btn .badge{position:absolute;top:8px;right:9px;width:10px;height:10px;border-radius:50%;background:var(--dot);border:2px solid var(--bg)}
+.icon-btn{width:44px;height:44px;border-radius:50%;background:var(--soft);display:grid;place-items:center;position:relative}
+.icon-btn svg{width:20px;height:20px}
+.icon-btn .badge{position:absolute;top:7px;right:8px;width:10px;height:10px;border-radius:50%;background:var(--dot);border:2px solid var(--bg)}
 
-/* 주간 달력 */
-.week-head{display:flex;align-items:center;justify-content:space-between;margin:20px 4px 10px}
-.week-head .ctrl{display:flex;gap:8px}
-.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.day{display:flex;flex-direction:column;align-items:center;gap:6px}
-.day .w{font-size:.85em;color:var(--sub)}
-.day button{width:100%;height:84px;border-radius:999px;background:var(--soft);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:12px 0 6px}
-.day .pip{width:6px;height:6px;border-radius:50%;background:transparent}
-.day .pip.on{background:var(--sub)} .day .pip.all{background:var(--ok)}
-.day .n{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:.95em}
-.day.today .w{color:var(--ink);font-weight:700}
-.day.sel .n{background:var(--blue);font-weight:700}
-@media (prefers-color-scheme: dark){ .day.sel .n{background:#5fb3c4;color:#111} }
+/* 한 달 달력 */
+.month-head{display:flex;align-items:center;justify-content:space-between;margin:14px 2px 8px}
+.month-head h1{margin:0}
+.month-head .ctrl{display:flex;gap:6px;align-items:center}
+.today-btn{height:44px;padding:0 14px;border-radius:999px;background:var(--soft);font-size:.85em;font-weight:600}
+.cal{background:var(--bg);border-radius:var(--r-lg);border:1px solid var(--line);overflow:hidden}
+.cal .wd{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:.72em;color:var(--sub);padding:8px 0 6px;border-bottom:1px solid var(--line)}
+.cal .wd span:first-child{color:var(--sun)} .cal .wd span:last-child{color:var(--sat)}
+.cal .grid{display:grid;grid-template-columns:repeat(7,1fr)}
+.cell{min-height:60px;padding:3px 2px 4px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;align-items:stretch;gap:2px;text-align:left;min-width:0}
+.cell:nth-last-child(-n+7){border-bottom:0}
+.cell .n{align-self:center;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.78em;margin-bottom:1px}
+.cell.sun .n{color:var(--sun)} .cell.sat .n{color:var(--sat)}
+.cell.out{opacity:.35}
+.cell.today .n{background:#3f9db0;color:#fff;font-weight:700}
+.cell.sel{background:var(--soft)}
+.cell.sel:not(.today) .n{box-shadow:0 0 0 1.5px var(--ink) inset;font-weight:700}
+.cev{display:block;font-size:.62em;line-height:1.45;padding:0 3px;border-radius:4px;white-space:nowrap;overflow:hidden;text-overflow:clip;color:var(--ink)}
+.cev.done{opacity:.45;text-decoration:line-through}
+.cmore{font-size:.6em;color:var(--sub);padding-left:3px}
 
-/* 진행률 */
-.progress{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.progress .pct{font-size:3.2em;font-weight:500;letter-spacing:-.04em;line-height:1}
-.ring{width:120px;height:120px;flex:none}
-.ring text{fill:var(--ink)}
-.chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border-radius:999px;padding:6px 12px;font-size:.85em}
+/* 고른 날 */
+.day-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:16px 2px 8px}
+.day-head h2{margin:0}
+.mini{display:flex;align-items:center;gap:8px;font-size:.8em;color:var(--sub);white-space:nowrap}
+.mini .bar{width:64px;height:6px;border-radius:3px;background:var(--soft);overflow:hidden}
+.mini .bar i{display:block;height:100%;background:var(--arc);border-radius:3px;transition:width .4s}
 
 /* 할 일 */
-.todo{display:flex;align-items:center;gap:12px;min-height:64px;padding:10px 12px 10px 10px;border-radius:var(--r-md);background:var(--soft);margin-bottom:8px}
-.todo .check{flex:none;width:40px;height:40px;border-radius:50%;background:var(--bg);display:grid;place-items:center;border:2px solid transparent}
-.todo .check svg{width:20px;height:20px;opacity:0}
+.todo{display:flex;align-items:center;gap:10px;min-height:52px;padding:6px 10px 6px 8px;border-radius:var(--r-md);background:var(--soft);margin-bottom:6px}
+.todo .check{flex:none;width:34px;height:34px;border-radius:50%;background:var(--bg);display:grid;place-items:center;border:2px solid transparent}
+.todo .check svg{width:17px;height:17px;opacity:0}
 .todo.done .check{background:var(--ok);color:#fff}
 .todo.done .check svg{opacity:1}
-.todo .body{flex:1;text-align:left;min-height:44px;display:flex;flex-direction:column;justify-content:center}
+.todo .body{flex:1;text-align:left;min-height:40px;display:flex;flex-direction:column;justify-content:center}
 .todo .t{word-break:break-word}
 .todo.done .t{color:var(--sub);text-decoration:line-through}
 .todo .m{font-size:.78em;color:var(--sub)}
 .todo .m.late{color:var(--warn)}
 .tagdot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:1px}
-.empty{color:var(--sub);text-align:center;padding:22px 0}
+.empty{color:var(--sub);text-align:center;padding:16px 0;font-size:.9em}
 
 /* 추가 버튼 (알약) */
-.fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(92px + env(safe-area-inset-bottom));
-  width:min(488px,calc(100% - 32px));height:60px;border-radius:999px;background:var(--yellow);
-  border:3px solid var(--bg);box-shadow:0 0 0 2px var(--yellow);display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-weight:600}
-.fab .c{width:44px;height:44px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-size:1.4em}
+.fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(82px + env(safe-area-inset-bottom));
+  width:min(488px,calc(100% - 28px));height:50px;border-radius:999px;background:var(--yellow);
+  border:3px solid var(--bg);box-shadow:0 0 0 2px var(--yellow);display:flex;align-items:center;justify-content:space-between;padding:0 6px;font-weight:600;font-size:.95em}
+.fab .c{width:38px;height:38px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-size:1.2em}
 .fab .arr{letter-spacing:-2px;opacity:.6;margin-left:6px}
 
 /* 하단 메뉴 */
-nav.tabs{position:fixed;left:0;right:0;bottom:calc(12px + env(safe-area-inset-bottom));display:flex;justify-content:center}
-nav.tabs .pill{display:flex;gap:6px;background:var(--bg);border-radius:999px;padding:6px;box-shadow:0 4px 18px rgba(0,0,0,.10);border:1px solid var(--line)}
-nav.tabs button{width:64px;height:60px;border-radius:999px;background:var(--soft);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.68em;color:var(--sub)}
-nav.tabs button svg{width:22px;height:22px}
+nav.tabs{position:fixed;left:0;right:0;bottom:calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:center}
+nav.tabs .pill{display:flex;gap:4px;background:var(--bg);border-radius:999px;padding:5px;box-shadow:0 4px 18px rgba(0,0,0,.10);border:1px solid var(--line)}
+nav.tabs button{width:58px;height:50px;border-radius:999px;background:var(--soft);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.66em;color:var(--sub)}
+nav.tabs button svg{width:20px;height:20px}
 nav.tabs button[aria-current=page]{background:var(--yellow);color:var(--ink);font-weight:700}
 
 /* 시트 */
-dialog{border:0;border-radius:var(--r-lg) var(--r-lg) 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom));width:100%;max-width:520px;margin:auto auto 0;background:var(--bg);color:var(--ink)}
+dialog{border:0;border-radius:var(--r-lg) var(--r-lg) 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom));width:100%;max-width:520px;margin:auto auto 0;background:var(--bg);color:var(--ink)}
 dialog::backdrop{background:rgba(0,0,0,.35)}
-.field{width:100%;min-height:var(--tap);padding:12px 16px;border-radius:16px;border:0;background:var(--soft)}
-textarea.field{min-height:100px;resize:vertical}
-.tags{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.tag{min-height:42px;padding:0 16px;border-radius:999px;background:var(--soft)}
+.field{width:100%;min-height:var(--tap);padding:10px 14px;border-radius:14px;border:0;background:var(--soft)}
+textarea.field{min-height:84px;resize:vertical}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag{min-height:40px;padding:0 14px;border-radius:999px;background:var(--soft)}
 .tag[aria-pressed=true]{background:var(--ink);color:var(--bg)}
-.btn{min-height:var(--tap);padding:0 22px;border-radius:999px;background:var(--ink);color:var(--bg);font-weight:600}
+.btn{min-height:var(--tap);padding:0 20px;border-radius:999px;background:var(--ink);color:var(--bg);font-weight:600}
 .btn.soft{background:var(--soft);color:var(--ink)}
 .btn.warn{background:transparent;color:var(--warn)}
 .row{display:flex;gap:8px;align-items:center}
 
 /* 기록 */
 .moods{display:flex;gap:6px}
-.mood{flex:1;height:64px;border-radius:999px;background:var(--bg);font-size:1.7em;opacity:.55}
+.mood{flex:1;height:50px;border-radius:999px;background:var(--bg);font-size:1.45em;opacity:.55}
 .mood[aria-pressed=true]{opacity:1;box-shadow:0 0 0 3px var(--ink) inset}
 .q{font-weight:600;margin:0 0 10px}
 .card textarea{background:var(--bg)}
 .wk{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;gap:4px}
-.wk .e{font-size:1.4em;height:1.6em}
+.wk .e{font-size:1.25em;height:1.6em}
 
 /* 명상 */
-.medi{display:flex;flex-direction:column;align-items:center;padding:28px 20px}
-.breath{width:230px;height:230px;border-radius:50%;display:grid;place-items:center;position:relative;margin:10px 0 20px}
+.medi{display:flex;flex-direction:column;align-items:center;padding:22px 16px}
+.breath{width:190px;height:190px;border-radius:50%;display:grid;place-items:center;position:relative;margin:10px 0 20px}
 .breath::before{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(255,255,255,.35)}
-.breath .core{width:120px;height:120px;border-radius:50%;background:var(--ring);display:grid;place-items:center;transform:scale(.8);
+.breath .core{width:104px;height:104px;border-radius:50%;background:var(--ring);display:grid;place-items:center;transform:scale(.8);
   transition:transform 4s ease-in-out;box-shadow:0 0 0 18px rgba(255,255,255,.35);text-align:center;color:#1d3a40}
 .breath .core b{display:block;font-size:1.05em}
-.breath .core span{font-size:1.6em;font-weight:500}
+.breath .core span{font-size:1.4em;font-weight:500}
 .mins{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
 .mins .tag{background:var(--bg)}
 @media (prefers-reduced-motion: reduce){ .breath .core{transition:none} }
@@ -156,43 +163,32 @@ ol{padding-left:20px}
     </button>
   </div>
 
-  <div class="week-head">
-    <div><h1 id="sel-title" style="margin:0">오늘</h1><div class="sub" id="sel-date"></div></div>
+  <div class="month-head">
+    <h1 id="month-title">2026년 11월</h1>
     <div class="ctrl">
-      <button class="icon-btn" type="button" id="prev-week" aria-label="지난주">
+      <button class="icon-btn" type="button" id="prev-month" aria-label="지난달">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
-      <button class="icon-btn" type="button" id="pick-date" aria-label="날짜 고르기">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></button>
-      <button class="icon-btn" type="button" id="next-week" aria-label="다음 주">
+      <button class="today-btn" type="button" id="go-today">오늘</button>
+      <button class="icon-btn" type="button" id="next-month" aria-label="다음 달">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
-      <input type="date" id="date-input" class="hidden" aria-hidden="true" tabindex="-1">
     </div>
   </div>
-  <div class="week" id="week" role="group" aria-label="이번 주 날짜"></div>
+  <div class="cal">
+    <div class="wd" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+    <div class="grid" id="month" role="grid" aria-label="이번 달 날짜"></div>
+  </div>
 
-  <div class="card blue progress" style="margin-top:16px">
-    <div>
-      <div class="chip">진행률</div>
-      <div class="pct" id="pct" style="margin:14px 0 8px">0%</div>
-      <div class="sub" id="pct-sub" style="color:inherit;opacity:.75"></div>
-    </div>
-    <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
-      <circle cx="60" cy="60" r="48" fill="none" stroke="var(--track)" stroke-width="14"/>
-      <circle id="ring-fg" cx="60" cy="60" r="48" fill="none" stroke="var(--arc)" stroke-width="14" stroke-linecap="round"
-        stroke-dasharray="301.6" stroke-dashoffset="301.6" transform="rotate(-90 60 60)" style="transition:stroke-dashoffset .6s"/>
-      <text x="60" y="58" text-anchor="middle" font-size="22" font-weight="600" id="ring-n">0</text>
-      <text x="60" y="78" text-anchor="middle" font-size="11" opacity=".7">남은 일</text>
-    </svg>
+  <div class="day-head">
+    <h2 id="list-title">오늘 할 일</h2>
+    <div class="mini" aria-live="polite"><span id="pct-sub"></span><span class="bar" aria-hidden="true"><i id="pct-bar" style="width:0"></i></span></div>
   </div>
+  <div id="todo-list"></div>
+  <div id="extra-list"></div>
 
   <div class="grid2">
     <div class="card"><div class="sub">이번 주 끝낸 일</div><div class="big-num" id="wk-done">0<small>개</small></div></div>
     <div class="card"><div class="sub">이번 주 명상</div><div class="big-num" id="wk-medi">0<small>분</small></div></div>
   </div>
-
-  <h2 id="list-title">할 일</h2>
-  <div id="todo-list"></div>
-  <div id="extra-list"></div>
 </section>
 
 <!-- ===== 기록 ===== -->
@@ -400,37 +396,47 @@ async function sync(){
 // ===== 할 일 =====
 let sel = todayKey();
 const live = () => data.todos.filter(t=>!t.deleted);
+let viewMonth = todayKey().slice(0,7);   // 'YYYY-MM' 보고 있는 달
+function monthDays(ym){
+  const [y,m] = ym.split('-').map(Number), first = new Date(y,m-1,1);
+  const start = addDays(ymd(first), -first.getDay());          // 일요일부터
+  const last = new Date(y,m,0).getDate(), rows = Math.ceil((first.getDay()+last)/7);
+  return [...Array(rows*7)].map((_,i)=>addDays(start,i));
+}
 function renderToday(){
-  const tk = todayKey();
-  $('sel-title').textContent = sel===tk ? '오늘' : sel===addDays(tk,1) ? '내일' : sel===addDays(tk,-1) ? '어제' : '할 일';
-  $('sel-date').textContent = korDate(sel);
-  $('week').innerHTML = weekOf(sel).map(k=>{
-    const items = live().filter(t=>t.due===k), open = items.filter(t=>!t.done).length;
-    const pip = !items.length ? '' : open ? 'on' : 'all';
-    return `<div class="day ${k===sel?'sel':''} ${k===tk?'today':''}"><span class="w" aria-hidden="true">${'월화수목금토일'[weekOf(sel).indexOf(k)]}</span>
-      <button type="button" data-day="${k}" aria-label="${korDate(k)}${items.length?`, 할 일 ${items.length}개 중 ${open}개 남음`:''}" ${k===sel?'aria-current="date"':''}>
-      <span class="pip ${pip}"></span><span class="n">${parse(k).getDate()}</span></button></div>`; }).join('');
+  const tk = todayKey(), all = live();
+  const [vy,vm] = viewMonth.split('-').map(Number);
+  $('month-title').textContent = `${vy}년 ${vm}월`;
+  const byDay = {}; all.forEach(t=>{ if (t.due) (byDay[t.due] ||= []).push(t); });
+  $('month').innerHTML = monthDays(viewMonth).map(k=>{
+    const d = parse(k), items = (byDay[k]||[]).sort((a,b)=>(a.done-b.done)||(a.createdAt||'').localeCompare(b.createdAt||''));
+    const open = items.filter(t=>!t.done).length, cls = ['cell'];
+    if (k.slice(0,7)!==viewMonth) cls.push('out'); if (k===tk) cls.push('today'); if (k===sel) cls.push('sel');
+    if (d.getDay()===0) cls.push('sun'); if (d.getDay()===6) cls.push('sat');
+    const chips = items.slice(0,3).map(t=>`<span class="cev ${t.done?'done':''}" style="background:${tagColor(t.tag)}">${esc(t.text)}</span>`).join('')
+      + (items.length>3 ? `<span class="cmore">+${items.length-3}</span>` : '');
+    return `<button type="button" class="${cls.join(' ')}" data-day="${k}" role="gridcell" aria-selected="${k===sel}"
+      aria-label="${korDate(k)}${items.length?`, 할 일 ${items.length}개 중 ${open}개 남음`:''}"><span class="n">${d.getDate()}</span>${chips}</button>`;
+  }).join('');
 
-  const items = live().filter(t=>t.due===sel);
+  const items = all.filter(t=>t.due===sel);
   const done = items.filter(t=>t.done).length, total = items.length;
-  const p = total ? Math.round(done/total*100) : 0;
-  $('pct').textContent = p + '%';
-  $('pct-sub').textContent = total ? `${total}개 중 ${done}개 끝냄` : '아직 할 일이 없어요';
-  $('ring-fg').setAttribute('stroke-dashoffset', 301.6*(1-p/100));
-  $('ring-n').textContent = total - done;
+  $('pct-sub').textContent = total ? `${done}/${total} 끝냄` : '';
+  $('pct-bar').style.width = (total ? done/total*100 : 0) + '%';
+  $('pct-bar').parentElement.classList.toggle('hidden', !total);
 
   const wk = weekOf(tk);
-  $('wk-done').innerHTML = `${live().filter(t=>t.done && t.doneAt && wk.includes(ymd(new Date(t.doneAt)))).length}<small>개</small>`;
+  $('wk-done').innerHTML = `${all.filter(t=>t.done && t.doneAt && wk.includes(ymd(new Date(t.doneAt)))).length}<small>개</small>`;
   $('wk-medi').innerHTML = `${data.meditations.filter(m=>!m.deleted && wk.includes(m.date)).reduce((s,m)=>s+m.minutes,0)}<small>분</small>`;
 
   const order = (a,b)=> (a.done-b.done) || (a.createdAt||'').localeCompare(b.createdAt||'');
-  $('list-title').textContent = `${sel===tk?'오늘':korDate(sel).replace(/ .요일/,'')} 할 일`;
+  $('list-title').textContent = sel===tk ? '오늘 할 일' : sel===addDays(tk,1) ? '내일 할 일' : `${korDate(sel)}`;
   $('todo-list').innerHTML = items.length ? items.sort(order).map(itemHTML).join('') : '<p class="empty">아래 노란 버튼으로 할 일을 적어 보세요.</p>';
 
   let extra = '';
   if (sel===tk) {
-    const late = live().filter(t=>!t.done && t.due && t.due<tk).sort((a,b)=>a.due.localeCompare(b.due));
-    const none = live().filter(t=>!t.done && !t.due);
+    const late = all.filter(t=>!t.done && t.due && t.due<tk).sort((a,b)=>a.due.localeCompare(b.due));
+    const none = all.filter(t=>!t.done && !t.due);
     if (late.length) extra += `<h2>밀린 일 ${late.length}개</h2>` + late.map(itemHTML).join('');
     if (none.length) extra += `<h2>날짜 없는 일</h2>` + none.map(itemHTML).join('');
     $('late-badge').classList.toggle('hidden', !late.length);
@@ -447,7 +453,7 @@ function itemHTML(t){
       <span class="m ${late?'late':''}"><span class="tagdot" style="background:${tagColor(t.tag)}"></span>${esc(t.tag||'')}${meta?' · '+meta:''}${late?' · 지남':''}</span></button></div>`;
 }
 document.addEventListener('click', e=>{
-  const day = e.target.closest('[data-day]'); if (day) { sel = day.dataset.day; renderToday(); return; }
+  const day = e.target.closest('[data-day]'); if (day) { sel = day.dataset.day; viewMonth = sel.slice(0,7); renderToday(); return; }
   const go = e.target.closest('[data-go]'); if (go) { show(go.dataset.go); return; }
   const act = e.target.closest('[data-act]'); if (!act) return;
   const t = data.todos.find(x=>x.id===act.closest('.todo').dataset.id); if (!t) return;
@@ -455,11 +461,11 @@ document.addEventListener('click', e=>{
     if (t.done && navigator.vibrate) navigator.vibrate(30); }
   if (act.dataset.act==='edit') openSheet(t);
 });
-$('prev-week').onclick = ()=>{ sel = addDays(sel,-7); renderToday(); };
-$('next-week').onclick = ()=>{ sel = addDays(sel,7); renderToday(); };
-$('pick-date').onclick = ()=>{ const i = $('date-input'); i.value = sel; i.classList.remove('hidden');
-  try{ i.showPicker(); }catch(e){ i.focus(); i.click(); } };
-$('date-input').onchange = e=>{ if (e.target.value) { sel = e.target.value; renderToday(); } e.target.classList.add('hidden'); };
+function shiftMonth(n){ const [y,m] = viewMonth.split('-').map(Number), d = new Date(y, m-1+n, 1);
+  viewMonth = ymd(d).slice(0,7); sel = viewMonth===todayKey().slice(0,7) ? todayKey() : ymd(d); renderToday(); }
+$('prev-month').onclick = ()=>shiftMonth(-1);
+$('next-month').onclick = ()=>shiftMonth(1);
+$('go-today').onclick = ()=>{ sel = todayKey(); viewMonth = sel.slice(0,7); renderToday(); };
 
 // 시트
 let editing = null, sheetTag = getPref('lastTag','일상');
