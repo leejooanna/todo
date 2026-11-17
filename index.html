@@ -301,6 +301,22 @@ ol{padding-left:20px}
 </dialog>
 
 <script>
+// ===== 새 버전 확인 =====
+// 고칠 때마다 이 값을 바꾼다. 폰이 예전 화면을 들고 있으면 열 때 새 버전으로 바꿔 준다.
+const APP_VERSION = '2026-11-17b';
+async function checkUpdate(){
+  try {
+    const r = await fetch('./index.html?nocache=' + Date.now(), {cache:'no-store'});
+    const m = (await r.text()).match(/const APP_VERSION = '([^']+)'/);
+    if (!m || m[1] === APP_VERSION) return;
+    if (sessionStorage.getItem('updatedTo') === m[1]) return;   // 같은 버전으로 두 번 새로고침하지 않기
+    sessionStorage.setItem('updatedTo', m[1]);
+    location.replace('./?v=' + m[1] + location.hash);
+  } catch(e) {}
+}
+checkUpdate();
+document.addEventListener('visibilitychange', ()=>{ if (document.visibilityState==='visible') checkUpdate(); });
+
 // ===== 설정값 =====
 const REPO = 'leejooanna/claude-work';
 const PATH = 'todo/data.json';
